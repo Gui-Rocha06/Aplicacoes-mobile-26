@@ -1,5 +1,6 @@
 // Cria a classe restaurant data
 
+import 'package:appaula04/model/dish.dart';
 import 'package:appaula04/model/restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +9,7 @@ import 'dart:convert';
 class RestaurantData extends ChangeNotifier {
   // Cria uma lista para carregar os restaurantes
 
-  List<Restaurant> _listRestaurant = [];
+  final List<Restaurant> _listRestaurant = [];
   List<Restaurant> get listRestaurant => _listRestaurant;
 
   // Cria uma função Future
@@ -30,5 +31,18 @@ class RestaurantData extends ChangeNotifier {
     }
 
     return _listRestaurant;
+  }
+
+  // Função para filtrar os pratos por categoria
+  List<Dish> getDishesByCategory(String category) {
+    List<Dish> result = [];
+    for (var restaurant in _listRestaurant) {
+      for (var dish in restaurant.dishes) {
+        if (dish.category?.toLowerCase() == category.toLowerCase()) {
+          result.add(dish);
+        }
+      }
+    }
+    return result;
   }
 }
