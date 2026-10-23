@@ -20,7 +20,7 @@ class _CadastroProdutoState extends State<CadastroProduto> {
 
   // Função para fazer o cadastro dos produtos
   _cadastroproduto() async {
-    String url = "http://10.109.84.20/api/produtos/";
+    String url = "http://10.109.84.20:8000/api/produtos/";
 
     // Cria a estrutura da mensagem para cadastro dos produtos
     Map<String, dynamic> prod = {
@@ -59,7 +59,8 @@ class _CadastroProdutoState extends State<CadastroProduto> {
   // Função de deletar o produto
   _deletarProduto() {
     // Metodo para deletar um produto
-    http.delete(Uri.parse('http://10.109.84.20/api/produtos/${nomeprod.text}/'));
+    http.delete(
+        Uri.parse('http://10.109.84.20:8000/api/produtos/${nomeprod.text}/'));
     nomeprod.text = "";
     showDialog(
         context: context,
@@ -91,11 +92,9 @@ class _CadastroProdutoState extends State<CadastroProduto> {
             child: TextField(
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8)
-                ),
-                hintText: "Digite o nome do produto"
-              ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  hintText: "Digite o nome do produto"),
               controller: nomeprod,
             ),
           ),
@@ -104,13 +103,10 @@ class _CadastroProdutoState extends State<CadastroProduto> {
             child: TextField(
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8)
-                ),
-                hintText: "Digite o valor do produto"
-              ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  hintText: "Digite o valor do produto"),
               controller: price,
-            
             ),
           ),
           Padding(
@@ -118,25 +114,22 @@ class _CadastroProdutoState extends State<CadastroProduto> {
             child: TextField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8)
-                ),
-                hintText: "Digite a qtde do produto"
-              ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  hintText: "Digite a qtde do produto"),
               controller: qtde,
             ),
           ),
-
-          ElevatedButton(onPressed: _cadastroproduto, 
-          child: Text("Cadastrar produto")),
-          ElevatedButton(onPressed: _deletarProduto, child: Text('Deletar produto')),
-          ElevatedButton(onPressed: (){
-            MaterialPageRoute(builder: (context)=>Prodscreen());
-
-          }, child: Text('Produtos Screen'))
-
-
-
+          ElevatedButton(
+              onPressed: _cadastroproduto, child: Text("Cadastrar produto")),
+          ElevatedButton(
+              onPressed: _deletarProduto, child: Text('Deletar produto')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Prodscreen()));
+              },
+              child: Text('Produtos Screen'))
         ],
       ),
     );
