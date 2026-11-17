@@ -1,36 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// Importe seus arquivos separados (ajuste os caminhos conforme suas pastas)
-import 'ui/_core/app_colors.dart'; // Onde está o seu AppTheme
-import 'ui/login/login_page.dart';
-import 'data/carrinho_provider.dart';
+import 'model/carrinho.dart';
+import 'ui/cadastro_page.dart';
+import 'ui/checkout_page.dart';
+import 'ui/widgets/home.dart';
+import 'ui/login_page.dart';
 
 void main() {
   runApp(
-    // O MultiProvider envolve o app para que o Carrinho possa ser acessado 
-    // de qualquer tela, como exigido pelo projeto para calcular o total.
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => CarrinhoProvider()),
-      ],
-      child: const MeuApp(),
+    ChangeNotifierProvider(
+      create: (_) => Carrinho(),
+      child: const SMHotelApp(),
     ),
   );
 }
 
-class MeuApp extends StatelessWidget {
-  const MeuApp({super.key});
+class SMHotelApp extends StatelessWidget {
+  const SMHotelApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    const azul = Color(0xFF0A5CAD);
+
     return MaterialApp(
       title: 'S&M Hotel',
       debugShowCheckedModeBanner: false,
-      // Aqui você aplica o tema que você criou!
-      theme: AppTheme.appTheme, 
-      // Define a tela de Login como a tela inicial
-      home: const LoginPage(), 
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: azul),
+        scaffoldBackgroundColor: const Color(0xFFF2F5FA),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: azul,
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0,
+        ),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            minimumSize: const Size.fromHeight(48),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+          ),
+        ),
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (_) => const LoginPage(),
+        '/cadastro': (_) => const CadastroPage(),
+        '/home': (_) => const Home(),
+        '/checkout': (_) => const CheckoutPage(),
+      },
     );
   }
 }
